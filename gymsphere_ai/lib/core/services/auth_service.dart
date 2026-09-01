@@ -1,9 +1,10 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 // URL base de tu backend. En el emulador de Android usa 10.0.2.2 en vez de
 // localhost; en Chrome/web y en Windows desktop, localhost funciona normal.
-const String _urlBase = 'http://192.168.0.2:3000';
+const String _urlBase = 'http://192.168.0.11:3000';
 
 class AuthService {
   // Paso 1: correo + clave
