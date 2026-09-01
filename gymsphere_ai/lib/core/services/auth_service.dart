@@ -1,10 +1,10 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
-const String _urlBase = 'http://192.168.0.2:3000';
+const String _urlBase = 'http://192.168.0.11:3000';
 
 class AuthService {
-
   static Future<Map<String, dynamic>> login({
     required String correo,
     required String clave,
