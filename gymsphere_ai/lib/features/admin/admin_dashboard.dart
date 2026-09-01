@@ -3,6 +3,7 @@ import '../../core/theme/app_colors.dart';
 import '../../shared/widgets/gym_sidebar.dart';
 import '../../shared/widgets/kpi_card.dart';
 import '../../core/services/session_service.dart';
+import 'usuarios_tab.dart';
 
 class AdminDashboard extends StatefulWidget {
   final String nombre;
@@ -16,8 +17,9 @@ class AdminDashboard extends StatefulWidget {
 class _AdminDashboardState extends State<AdminDashboard> {
   int _indiceActual = 0;
 
-  final List<SidebarItem> _items = const [
+    final List<SidebarItem> _items = const [
     SidebarItem(icono: Icons.grid_view_rounded, etiqueta: 'DASHBOARD'),
+    SidebarItem(icono: Icons.manage_accounts_outlined, etiqueta: 'USUARIOS'),
     SidebarItem(icono: Icons.groups_outlined, etiqueta: 'MEMBRESÍAS'),
     SidebarItem(icono: Icons.vpn_key_outlined, etiqueta: 'CONTROL DE ACCESO'),
     SidebarItem(icono: Icons.fitness_center, etiqueta: 'BIBLIOTECA DE RUTINAS'),
@@ -29,8 +31,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
     final anchoPantalla = MediaQuery.of(context).size.width;
     final esEscritorio = anchoPantalla >= 900;
 
-    final List<Widget> pantallas = [
+        final List<Widget> pantallas = [
       const _DashboardTab(),
+      const UsuariosTab(),
       const _PantallaEnConstruccion(titulo: 'Membresías'),
       const _PantallaEnConstruccion(titulo: 'Control de Acceso'),
       const _PantallaEnConstruccion(titulo: 'Biblioteca de Rutinas'),

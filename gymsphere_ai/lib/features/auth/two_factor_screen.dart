@@ -7,6 +7,7 @@ import '../../core/services/auth_service.dart';
 import '../member/member_dashboard.dart';
 import '../admin/admin_dashboard.dart';
 import '../reception/reception_dashboard.dart';
+import '../../core/services/sesion_actual.dart';
 
 class TwoFactorScreen extends StatefulWidget {
   final String correo;
@@ -86,13 +87,19 @@ class _TwoFactorScreenState extends State<TwoFactorScreen> {
 
       if (!mounted) return;
 
-            final usuario = resultado['usuario'] as Map<String, dynamic>;
+      final usuario = resultado['usuario'] as Map<String, dynamic>;
       final rol = usuario['rol'] as String;
       final nombre = usuario['nombre'] as String;
 
       // Enrutamiento real según el rol del usuario autenticado
       Widget pantallaDestino;
             final correoUsuario = usuario['correo'] as String;
+                  SesionActual.guardar(
+        token: resultado['token'] as String,
+        nombre: nombre,
+        correo: correoUsuario,
+        rol: rol,
+      );
 
             if (rol == 'ADMINISTRADOR') {
         pantallaDestino = AdminDashboard(nombre: nombre);
