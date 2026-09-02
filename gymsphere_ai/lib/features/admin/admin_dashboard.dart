@@ -22,8 +22,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
     SidebarItem(icono: Icons.manage_accounts_outlined, etiqueta: 'USUARIOS'),
     SidebarItem(icono: Icons.groups_outlined, etiqueta: 'MEMBRESÍAS'),
     SidebarItem(icono: Icons.vpn_key_outlined, etiqueta: 'CONTROL DE ACCESO'),
-    SidebarItem(icono: Icons.fitness_center, etiqueta: 'BIBLIOTECA DE RUTINAS'),
-    SidebarItem(icono: Icons.warning_amber_rounded, etiqueta: 'INCIDENCIAS'),
+    SidebarItem(icono: Icons.fitness_center, etiqueta: 'BIBLIOTECA DE RUTINAS'), 
   ];
 
   @override
@@ -37,7 +36,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
       const _PantallaEnConstruccion(titulo: 'Membresías'),
       const _PantallaEnConstruccion(titulo: 'Control de Acceso'),
       const _PantallaEnConstruccion(titulo: 'Biblioteca de Rutinas'),
-      const _PantallaEnConstruccion(titulo: 'Incidencias'),
     ];
 
     final sidebar = GymSidebar(
@@ -236,11 +234,6 @@ class _DashboardTab extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               const Text('● EN VIVO', style: TextStyle(color: AppColors.primary, fontSize: 12)),
-              const Spacer(),
-              Text(
-                'HORA SISTEMA // 14:42:09',
-                style: TextStyle(color: Colors.grey[500], fontSize: 12),
-              ),
             ],
           ),
           const SizedBox(height: 12),

@@ -8,6 +8,7 @@ import '../member/member_dashboard.dart';
 import '../admin/admin_dashboard.dart';
 import '../reception/reception_dashboard.dart';
 import '../../core/services/sesion_actual.dart';
+import 'package:flutter/services.dart';
 
 class TwoFactorScreen extends StatefulWidget {
   final String correo;
@@ -123,28 +124,59 @@ class _TwoFactorScreenState extends State<TwoFactorScreen> {
     }
   }
 
-  Widget _cuadroDigito(int indice) {
+    Widget _cuadroDigito(int indice) {
     return SizedBox(
       width: 45,
       height: 55,
-      child: TextField(
-        controller: _controladores[indice],
-        focusNode: _focos[indice],
-        textAlign: TextAlign.center,
-        keyboardType: TextInputType.number,
-        maxLength: 1,
-        style: const TextStyle(color: AppColors.neutral, fontSize: 22, fontWeight: FontWeight.bold),
-        decoration: const InputDecoration(
-          counterText: '',
-          filled: true,
-          fillColor: AppColors.secondary,
-          border: OutlineInputBorder(borderSide: BorderSide.none),
-        ),
-        onChanged: (valor) {
-          if (valor.isNotEmpty && indice < 5) {
-            _focos[indice + 1].requestFocus();
+      child: RawKeyboardListener(
+        focusNode: FocusNode(skipTraversal: true),
+        onKey: (evento) {
+          // Si presiona Retroceso y el cuadro ya está vacío, salta al anterior
+          // y borra su contenido, para no tener que tocarlo manualmente.
+          if (evento is RawKeyDownEvent &&
+              evento.logicalKey == LogicalKeyboardKey.backspace &&
+              _controladores[indice].text.isEmpty &&
+              indice > 0) {
+            _controladores[indice - 1].clear();
+            _focos[indice - 1].requestFocus();
           }
         },
+        child: TextField(
+          controller: _controladores[indice],
+          focusNode: _focos[indice],
+          textAlign: TextAlign.center,
+          keyboardType: TextInputType.number,
+          maxLength: 1,
+          // Selecciona el contenido al enfocar, así escribir un dígito nuevo
+          // reemplaza al anterior en vez de bloquearse por el límite de 1 caracter.
+          onTap: () {
+            _controladores[indice].selection = TextSelection(
+              baseOffset: 0,
+              extentOffset: _controladores[indice].text.length,
+            );
+          },
+          style: const TextStyle(
+            color: AppColors.neutral,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+          decoration: const InputDecoration(
+            counterText: '',
+            filled: true,
+            fillColor: AppColors.secondary,
+            border: OutlineInputBorder(borderSide: BorderSide.none),
+          ),
+          onChanged: (valor) {
+            if (valor.isNotEmpty && indice < 5) {
+              _focos[indice + 1].requestFocus();
+              // También selecciona el contenido del siguiente cuadro por si ya tenía un dígito
+              _controladores[indice + 1].selection = TextSelection(
+                baseOffset: 0,
+                extentOffset: _controladores[indice + 1].text.length,
+              );
+            }
+          },
+        ),
       ),
     );
   }
